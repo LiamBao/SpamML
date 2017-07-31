@@ -1,0 +1,44 @@
+
+#require:
+install python2.7
+1) download python2.7.7 source File in /data/tools
+	https://www.python.org/ftp/python/2.7.7/Python-2.7.7.tar.xz
+2) Unpack the Python-2.7.7.tar.xz
+           [root @data/tools]# xz -d Python-2.7.7.tar.xz && tar -xvf Python-2.7.7.tar
+3) default installation Python 
+           [root @data/tools]# ./configure && make && make install
+4) Change software to new version python
+           [root @data/tools]# mv /usr/bin/python /usr/bin/python.old
+           [root @data/tools]# ln -s /usr/local/bin/python /usr/bin/python
+5) Change yum head to  new version python
+	[root @data/tools]# vim /usr/bin/yum
+		Will be the first line of the configuration file! # /usr/bin/python is amended as:! # /usr/bin/python2.4
+
+#modify for CentOS:
+sed -ie 's#/usr/bin/python$#/usr/bin/python2.4#g' /usr/bin/yum
+
+#install pip
+wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py --no-check-certificate
+python get-pip.py
+
+#prepare:
+sudo yum install gcc gcc-c++ autoconf automake glibc-devel gcc-gfortran
+sudo yum install lapack-devel blas-devel
+sudo pip install -U suds python-memcached numpy scipy scikit-learn 
+# make sure all above package are installed successfuly!
+
+#conf
+in MQspam/conf.py
+NUM_WORKERS: set according to cpu core number; /2 if run both fans and retweet
+channel
+MailInfo: set From and Tos
+
+#run
+sh run.sh
+
+#stop
+sh stop.sh
+
+#debug:
+add task: add_task.png
+del task: from 设置 button
